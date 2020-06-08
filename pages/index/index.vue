@@ -9,15 +9,21 @@
 			<view class="line"></view>
 
 			<view class="inputView">
-				<text class="leftTitle">证件号码</text>
-				<input class="rightInput" name="zjhm" value="430423199001281412" placeholder="请输入证件号码" />
+				<text class="leftTitle">手机号</text>
+				<input class="rightInput" name="zjhm" value="13249746918" placeholder="请输入证件号码" />
 			</view>
 
-	
+
 
 			<view class="line"></view>
 
-	
+<view class="inputView">
+				<text class="leftTitle">来访人数</text>
+				<picker class="picker" @change="bindPickerChangeTwo" :value="personIndex" :range="personArray">
+					<view class="pickView">{{ personArray[personIndex] }}</view>
+				</picker>
+				<image class="arrowImg0" mode="aspectFit" src="../../static/arrow_right@2x.png"></image>
+			</view>
 
 			<view class="inputView">
 				<text class="leftTitle">来访事由</text>
@@ -31,19 +37,17 @@
 
 			<view class="inputView">
 				<text class="leftTitle">来访时间</text>
-				<input class="rightInput" name="acctNo" value="6236683320000581124" placeholder="请输入银行卡号" />
+				<picker class="picker" mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
+					<view class="pickView">{{ date }}</view>
+				</picker>
+				<image class="arrowImg0" mode="aspectFit" src="../../static/arrow_right@2x.png"></image>
 			</view>
-			<view class="line"></view>
 
-			<!-- <view class="inputView">
-				<text class="leftTitle">预留手机号</text>
-				<input class="rightInput" name="phone" value="13249746918" placeholder="请输入银行卡号预留手机号" />
-			</view>
-			<view class="line"></view> -->
+
 
 			<view class="uni-btn-v">
 				<button class="botBtn" type="primary" form-type="submit">下一步</button>
-				<view class="tipText">  </view>
+				<view class="tipText"> </view>
 			</view>
 		</form>
 	</view>
@@ -59,25 +63,41 @@
 
 	export default {
 		data() {
-			
+			const currentDate = this.getDate({
+				format: true
+			});
 			return {
-				index: 0,
-				requestCount: 0,
 				seen: true,
-				array: ['中介看房','搬家放行', '送货上门','装修放行','家政服务','朋友来访'],
+				index: 0,
+				array: ['中介看房', '搬家放行', '送货上门', '装修放行', '家政服务', '朋友来访'],
+				personIndex: 0,
+				personArray: ['1人', '2人', '3人', '4人', '5人', '6人'],
+				date: currentDate,
 
 				myFormatData: {},
-				myObjData: {}
+				myObjData: {},
+
 			};
 		},
-
+		computed: {
+			startDate() {
+				return this.getDate('start');
+			},
+			endDate() {
+				return this.getDate('end');
+			}
+		},
 		onLoad: function(e) {
-		
-		   this.myObjData = {xm:e.xm,zjhm:e.zjhm,appKey:e.appKey};
-		  
-		   this.requestRefundInfo({},function(isRequestSuceess){
-			   
-		   });
+
+			this.myObjData = {
+				xm: e.xm,
+				zjhm: e.zjhm,
+				appKey: e.appKey
+			};
+
+			this.requestRefundInfo({}, function(isRequestSuceess) {
+
+			});
 		},
 		methods: {
 			// 请求退款信息
@@ -89,7 +109,7 @@
 					url: 'http://193.112.16.196:8080/zjzl/SK/json/Z034',
 					method: 'POST',
 					data: {
-						
+
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
@@ -97,26 +117,25 @@
 					success: res => {
 						var dataDic = res.data;
 						console.log("退款记录接口调用成功 " + dataDic);
-					    if(Number(dataDic['code']) == 0){
-							
+						if (Number(dataDic['code']) == 0) {
+
 							var jsonArr = dataDic["datalist"];
-							if(jsonArr.length > 0){
-								
+							if (jsonArr.length > 0) {
+
 								this.seen = true;
-								
+
 							}
-							
-						}
-						else{
-							
+
+						} else {
+
 							uni.showModal({
 								content: dataDic['msg'],
 								showCancel: false
 							});
 						}
-						
+
 						uni.hideLoading();
-			
+
 					},
 					fail: () => {
 						uni.hideLoading();
@@ -150,7 +169,7 @@
 					});
 					return;
 				}
-				
+
 
 				this.requestCount = 0;
 				// 回调函数
@@ -158,8 +177,6 @@
 					console.log(isRequestSucess);
 				});
 			},
-
-			
 
 			bindDateChange: function(e) {
 				this.date = e.target.value;
@@ -170,7 +187,25 @@
 				console.log(e.target.value);
 			},
 			bindPickerChangeTwo: function(e) {
-				this.xqIndex = e.target.value;
+				this.personIndex = e.target.value;
+				console.log(e.target.value);
+			},
+			getDate(type) {
+				const date = new Date();
+				let year = date.getFullYear();
+				let month = date.getMonth() + 1;
+				let day = date.getDate();
+
+				if (type === 'start') {
+					
+					day = day;
+					
+				} else if (type === 'end') {
+					year = year + 1;
+				}
+				month = month > 9 ? month : '0' + month;
+				day = day > 9 ? day : '0' + day;
+				return `${year}-${month}-${day}`;
 			}
 		}
 	};
@@ -245,9 +280,10 @@
 
 	.botBtn {
 		width: 90%;
-		margin-top: 52rpx;
+		margin-top: 72rpx;
 	}
-	.tipText{
+
+	.tipText {
 		width: 100%;
 		margin-left: 60rpx;
 		align-items: center;

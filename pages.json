@@ -6,7 +6,11 @@
 				"navigationBarTitleText": "访客"
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/index/visitResult/visitResult",
+            "style" : {}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
