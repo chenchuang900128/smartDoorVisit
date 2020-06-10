@@ -17,7 +17,7 @@
 
 			<view class="line"></view>
 
-<view class="inputView">
+			<view class="inputView">
 				<text class="leftTitle">来访人数</text>
 				<picker class="picker" @change="bindPickerChangeTwo" :value="personIndex" :range="personArray">
 					<view class="pickView">{{ personArray[personIndex] }}</view>
@@ -115,6 +115,7 @@
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: res => {
+						uni.hideLoading();
 						var dataDic = res.data;
 						console.log("退款记录接口调用成功 " + dataDic);
 						if (Number(dataDic['code']) == 0) {
@@ -134,7 +135,6 @@
 							});
 						}
 
-						uni.hideLoading();
 
 					},
 					fail: () => {
@@ -197,9 +197,9 @@
 				let day = date.getDate();
 
 				if (type === 'start') {
-					
+
 					day = day;
-					
+
 				} else if (type === 'end') {
 					year = year + 1;
 				}
