@@ -1,17 +1,27 @@
 <template>
 	<view class="content">
-		<view class="text">uQRCode二维码生成</view>
+		<view class="text">访客二维码</view>
 		<view class="canvas">
 			<canvas canvas-id="qrcode" :style="{width: `${qrcodeSize}px`, height: `${qrcodeSize}px`}" />
-			<text>canvas</text>
 		</view>
-		<view class="image">
-			<image :src="qrcodeSrc" />
-			<text>image</text>
-		</view>
-		<input class="input" v-model="qrcodeText" placeholder="输入内容生成二维码" />
-		<button class="button" type="primary" @tap="make()">微信分享</button>
-		<button class="button" type="default" @tap="toComponent()">短信发送</button>
+
+		<text class="list-text"> 姓名
+		</text>
+
+		<text class="list-text"> 手机号:
+		</text>
+
+		<text class="list-text"> 来访人数:
+		</text>
+
+		<text class="list-text"> 来访事由:
+		</text>
+
+		<text class="list-text"> 来访日期:
+		</text>
+
+		<button class="button" type="primary" @tap="shareClick()">微信分享</button>
+		<button class="button" type="default" @tap="sendMsgClick()">短信发送</button>
 	</view>
 </template>
 
@@ -22,7 +32,7 @@
 		data() {
 			return {
 				qrcodeText: 'uQRCode',
-				qrcodeSize: 129,
+				qrcodeSize: 136,
 				qrcodeSrc: ''
 			}
 		},
@@ -49,10 +59,11 @@
 					}
 				})
 			},
-			toComponent() {
-				uni.navigateTo({
-					url: '/pages/component/qrcode/qrcode'
-				})
+			shareClick() {
+
+			},
+			sendMsgClick() {
+
 			}
 		}
 	}
@@ -74,49 +85,39 @@
 	.text {
 		display: flex;
 		justify-content: center;
-		margin-top: 50rpx;
+		margin-top: 40rpx;
 		font-size: 36rpx;
-		color: #666666;
+		height: 44rpx;
+		color: #333333;
 	}
 
 	.canvas {
-		margin-top: 50rpx;
+		margin-top: 40rpx;
+		margin-bottom: 20rpx;
 		text-align: center;
 	}
 
-	.canvas canvas {
-		margin: 0 auto;
-	}
+
 
 	.image {
-		width: 258rpx;
+		width: 272rpx;
 		margin-top: 50rpx;
 		text-align: center;
+
 	}
 
-	.image image {
-		display: block;
-		width: 258rpx;
-		height: 258rpx;
-	}
-
-	.input {
-		width: 600rpx;
-		height: 40px;
-		margin: 50rpx 0;
-		padding: 0 20rpx;
-		border: 1px solid #b0b0b0;
-		border-radius: 5px;
-		background-color: #ffffff;
-		box-sizing: border-box;
+	.list-text {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+		line-height: 52rpx;
+		font-size: 28rpx;
+		color: #666666;
 	}
 
 	.button {
-		width: 690rpx;
-		margin: 10rpx;
-	}
+		width: 88%;
+		margin-top: 40rpx;
 
-	.button:last-child {
-		margin-bottom: 50rpx;
 	}
 </style>

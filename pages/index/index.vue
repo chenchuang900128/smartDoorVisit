@@ -95,9 +95,7 @@
 				appKey: e.appKey
 			};
 
-			this.requestRefundInfo({}, function(isRequestSuceess) {
-
-			});
+		
 		},
 		methods: {
 			// 请求退款信息
@@ -120,12 +118,12 @@
 						console.log("退款记录接口调用成功 " + dataDic);
 						if (Number(dataDic['code']) == 0) {
 
-							var jsonArr = dataDic["datalist"];
-							if (jsonArr.length > 0) {
+							// var jsonArr = dataDic["datalist"];
+							// if (jsonArr.length > 0) {
 
-								this.seen = true;
+							// 	this.seen = true;
 
-							}
+							// }
 
 						} else {
 
@@ -155,26 +153,24 @@
 					});
 					return;
 				}
-				if (formdata['zjhm'].length < 6) {
+				if (formdata['zjhm'].length < 11) {
 					uni.showModal({
-						content: '请输入证件号码',
+						content: '请输入手机号',
 						showCancel: false
 					});
 					return;
 				}
-				if (formdata['contract'].length < 6) {
-					uni.showModal({
-						content: '请输入合同编号',
-						showCancel: false
-					});
-					return;
-				}
+				
 
-
-				this.requestCount = 0;
+				uni.navigateTo({
+					url: './visitResult/visitResult'
+				});
 				// 回调函数
 				this.requestBankVerify(formdata, function(isRequestSucess) {
-					console.log(isRequestSucess);
+
+					uni.navigateTo({
+						url: './visitResult/visitResult'
+					});
 				});
 			},
 
