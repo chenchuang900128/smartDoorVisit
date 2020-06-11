@@ -24,6 +24,8 @@
 				</picker>
 				<image class="arrowImg0" mode="aspectFit" src="../../static/arrow_right@2x.png"></image>
 			</view>
+			
+			<view class="line"></view>
 
 			<view class="inputView">
 				<text class="leftTitle">来访事由</text>
@@ -43,12 +45,14 @@
 				<image class="arrowImg0" mode="aspectFit" src="../../static/arrow_right@2x.png"></image>
 			</view>
 
+			<view class="line"></view>
 
 
 			<view class="uni-btn-v">
 				<button class="botBtn" type="primary" form-type="submit">下一步</button>
 				<view class="tipText"> </view>
 			</view>
+			
 		</form>
 	</view>
 </template>
@@ -165,13 +169,7 @@
 				uni.navigateTo({
 					url: './visitResult/visitResult'
 				});
-				// 回调函数
-				this.requestBankVerify(formdata, function(isRequestSucess) {
-
-					uni.navigateTo({
-						url: './visitResult/visitResult'
-					});
-				});
+				
 			},
 
 			bindDateChange: function(e) {
@@ -276,7 +274,7 @@
 
 	.botBtn {
 		width: 90%;
-		margin-top: 72rpx;
+		margin-top: 80rpx;
 	}
 
 	.tipText {

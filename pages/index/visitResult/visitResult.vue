@@ -5,19 +5,19 @@
 			<canvas canvas-id="qrcode" :style="{width: `${qrcodeSize}px`, height: `${qrcodeSize}px`}" />
 		</view>
 
-		<text class="list-text"> 姓名
+		<text class="list-text">{{ '姓名:' + ' ' + '陈创'}}
 		</text>
 
-		<text class="list-text"> 手机号:
+		<text class="list-text"> {{ '手机号:' + '  ' + '18320167762'}}
 		</text>
 
-		<text class="list-text"> 来访人数:
+		<text class="list-text"> {{ '来访人数:' + '  ' + '2人'}}
 		</text>
 
-		<text class="list-text"> 来访事由:
+		<text class="list-text"> {{ '来访事由:' + '  ' + '搬家放行'}}
 		</text>
 
-		<text class="list-text"> 来访日期:
+		<text class="list-text"> {{ '来访日期:' + '  ' + '2020-06-16'}}
 		</text>
 
 		<button class="button" type="primary" @tap="shareClick()">微信分享</button>
@@ -60,7 +60,9 @@
 				})
 			},
 			shareClick() {
-
+                this.$bridge.callHandler('shareClick', '', res => {
+					
+				});
 			},
 			sendMsgClick() {
 
@@ -110,14 +112,14 @@
 		display: flex;
 		justify-content: center;
 		width: 100%;
-		line-height: 52rpx;
+		line-height: 54rpx;
 		font-size: 28rpx;
 		color: #666666;
 	}
 
 	.button {
 		width: 88%;
-		margin-top: 40rpx;
+		margin-top: 52rpx;
 
 	}
 </style>

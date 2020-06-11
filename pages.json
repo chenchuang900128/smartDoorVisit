@@ -8,13 +8,20 @@
 		}
 	    ,{
             "path" : "pages/index/visitResult/visitResult",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "访客"
+			}
         }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"backgroundColor": "#F8F8F8",
+		// 是否隐藏导航栏
+		"app-plus": {
+			"titleNView": false
+		}
+		
 	}
 }

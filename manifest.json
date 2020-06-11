@@ -71,5 +71,12 @@
     },
     "mp-toutiao" : {
         "usingComponents" : true
+    },
+    "h5" : {
+        "router" : {
+            "mode" : "hash",
+            "base" : "/h5/smartDoorVisit/"
+        },
+        "title" : "智能门禁访客"
     }
 }
