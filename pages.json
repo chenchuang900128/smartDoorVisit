@@ -1,7 +1,13 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/index",
+			"path": "pages/index/visitHome",
+			"style": {
+				"navigationBarTitleText": "访客"
+			}
+		},	
+		{
+			"path": "pages/index/visitAdd",
 			"style": {
 				"navigationBarTitleText": "访客"
 			}
@@ -11,6 +17,10 @@
             "style" : {
 				"navigationBarTitleText": "访客"
 			}
+        }
+        ,{
+            "path" : "pages/index/visitList/visitList",
+            "style" : {}
         }
     ],
 	"globalStyle": {
