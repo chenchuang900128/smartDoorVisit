@@ -77,7 +77,7 @@
 				personIndex: 0,
 				personArray: ['1人', '2人', '3人', '4人', '5人', '6人'],
 				date: currentDate,
-
+				fwzl:'',
 				myFormatData: {},
 				myObjData: {},
 
@@ -99,9 +99,41 @@
 				appKey: e.appKey
 			};
 
-		
+		   this.requestContractInfo();
 		},
 		methods: {
+			// 请求合同信息
+			requestContractInfo: function(formdata, callBack) {
+				uni.showLoading({
+					title: '加载中'
+				});
+				uni.request({
+					url: 'http://193.112.16.196:8080/zjzl/a/info/zjLogin/GIHSSContQuery',
+					method: 'POST',
+					data: {
+						zjhm:this.myObjData.zjhm,
+						appKey:this.myObjData.appKey
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: res => {
+						uni.hideLoading();
+						var dataDic = res.data.data;
+						
+						uni.showModal({
+							content: dataDic['fwzl'],
+							showCancel: false
+						});
+			
+			
+					},
+					fail: () => {
+						uni.hideLoading();
+					},
+					complete: () => {}
+				});
+			},
 			// 请求退款信息
 			requestRefundInfo: function(formdata, callBack) {
 				uni.showLoading({
