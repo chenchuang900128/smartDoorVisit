@@ -1,4 +1,6 @@
 <script>
+	import ALLURL from "@/common/allUrl.js";
+	
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')

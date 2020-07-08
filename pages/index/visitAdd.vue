@@ -2,15 +2,15 @@
 	<view class="content" v-if="seen">
 		<form @submit="formSubmit" @reset="formReset">
 			<view class="inputView">
-				<text class="leftTitle">姓名</text>
-				<input class="rightInput" name="name" value="陈创" placeholder="请输入姓名" />
+				<text class="leftTitle">访客姓名</text>
+				<input class="rightInput" name="name" value="陈德" placeholder="请输入姓名" />
 			</view>
 
 			<view class="line"></view>
 
 			<view class="inputView">
-				<text class="leftTitle">手机号</text>
-				<input class="rightInput" name="zjhm" value="13249746918" placeholder="请输入证件号码" />
+				<text class="leftTitle">访客手机号</text>
+				<input class="rightInput" name="phone" value="13249752918" placeholder="请输入证件号码" />
 			</view>
 
 
@@ -59,6 +59,8 @@
 
 <script>
 	import Vue from 'vue';
+	import ALLURL from "@/common/allUrl.js";
+
 
 	// #ifdef H5
 	import Bridge from '../../common/bridge.js';
@@ -73,11 +75,11 @@
 			return {
 				seen: true,
 				index: 0,
-				array: ['中介看房', '搬家放行', '送货上门', '装修放行', '家政服务', '朋友来访'],
+				array: ['搬家放行', '送货上门', '装修放行', '家政服务', '朋友来访'],
 				personIndex: 0,
 				personArray: ['1人', '2人', '3人', '4人', '5人', '6人'],
 				date: currentDate,
-				fwzl:'',
+				fwzl: '',
 				myFormatData: {},
 				myObjData: {},
 
@@ -98,8 +100,12 @@
 				zjhm: e.zjhm,
 				appKey: e.appKey
 			};
-
+		 
+		   console.log(ALLURL.baseURL);
+		   console.log('中国=' + this.fwzl);
 		   this.requestContractInfo();
+		   
+		   
 		},
 		methods: {
 			// 请求合同信息
@@ -108,7 +114,7 @@
 					title: '加载中'
 				});
 				uni.request({
-					url: 'http://193.112.16.196:8080/zjzl/a/info/zjLogin/GIHSSContQuery',
+					url:    ALLURL.baseURL + '/zjzl/a/info/zjLogin/GIHSSContQuery',
 					method: 'POST',
 					data: {
 						zjhm:this.myObjData.zjhm,
@@ -119,12 +125,23 @@
 					},
 					success: res => {
 						uni.hideLoading();
-						var dataDic = res.data.data;
 						
-						uni.showModal({
-							content: dataDic['fwzl'],
-							showCancel: false
-						});
+						var dataDic = res.data;
+						console.log("退保证金接口调用成功 " + dataDic);
+						if (Number(dataDic['code']) == 0) {
+							
+							this.fwzl =  ALLURL.ZJValidString(dataDic['data']['fwzl']);
+							
+						}
+						else{
+							
+							uni.showModal({
+								content: dataDic['msg'],
+								showCancel: false
+							});
+						}
+						
+					
 			
 			
 					},
@@ -135,15 +152,20 @@
 				});
 			},
 			// 请求退款信息
-			requestRefundInfo: function(formdata, callBack) {
+			requestAddVisits: function(formdata, callBack) {
 				uni.showLoading({
 					title: '加载中'
 				});
 				uni.request({
-					url: 'http://193.112.16.196:8080/zjzl/SK/json/Z034',
+					url: 'http://193.112.16.196:8080/zjzl/guard/saveForeignVisitors',
 					method: 'POST',
 					data: {
-
+						roomKey:  ALLURL.ZJValidString(this.fwzl),//房屋标识
+						primaryKey: this.myFormatData.phone,// 唯一标识
+						visitingTime: date,// 来访时间
+						visitingNum: personArray[personIndex],//来访人数
+						visitingReason: array[index],//来访事由
+						visitorsName: this.myFormatData.name//来访姓名
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
@@ -189,7 +211,7 @@
 					});
 					return;
 				}
-				if (formdata['zjhm'].length < 11) {
+				if (formdata['phone'].length < 11) {
 					uni.showModal({
 						content: '请输入手机号',
 						showCancel: false
