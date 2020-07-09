@@ -6,11 +6,11 @@
 		</view>
 		<view class="grid">
 			<view class="grid-item" v-for="(item, index) in gridList" :key="index" @click="gridClick(item, index)">
-				<image :src="item.imgSrc"  mode="aspectFill"></image>
+				<image :src="item.imgSrc" mode="aspectFill"></image>
 				<view v-text="item.name"></view>
 			</view>
 		</view>
-		
+
 
 	</view>
 </template>
@@ -21,12 +21,12 @@
 	import Bridge from '../../common/bridge.js';
 	Vue.prototype.$bridge = Bridge;
 	// #endif
-   
+
 	export default {
 		data() {
 			return {
 				myObjData: {},
-				
+
 				gridList: [{
 						name: '访客添加',
 						imgSrc: "../../static/访客.svg",
@@ -65,24 +65,26 @@
 		},
 		methods: {
 			gridClick(item, index) { //格子菜单点击事件
+				uni.showModal({
+					content: "暂未开放，敬请期待！",
+				});
+				// if (index == 0) {
 
-				if (index == 0) {
+				// 	uni.navigateTo({
+				// 		// 正向传值
+				// 		url: './visitAdd?xm=' + this.myObjData['xm'] + '&zjhm=' + this.myObjData['zjhm'] + '&appKey=' + this.myObjData[
+				// 			'appKey']
+				// 	});
 
-					uni.navigateTo({
-						// 正向传值
-						url: './visitAdd?xm=' + this.myObjData['xm'] + '&zjhm=' + this.myObjData['zjhm'] + '&appKey=' + this.myObjData[
-							'appKey']
-					});
+				// } else if (index == 1) {
 
-				} else if (index == 1) {
+				// 	uni.navigateTo({
+				// 		// 正向传值
+				// 		url: './visitList/visitList?xm=' + this.myObjData['xm'] + '&zjhm=' + this.myObjData['zjhm'] + '&appKey=' +
+				// 			this.myObjData['appKey']
+				// 	});
 
-					uni.navigateTo({
-						// 正向传值
-						url: './visitList/visitList?xm=' + this.myObjData['xm'] + '&zjhm=' + this.myObjData['zjhm'] + '&appKey=' +
-							this.myObjData['appKey']
-					});
-
-				}
+				// }
 
 			}
 		}
@@ -128,7 +130,7 @@
 
 			view {
 				font-size: 28upx;
-				margin-top:4upx;
+				margin-top: 4upx;
 				color: #666666;
 			}
 
