@@ -45,6 +45,7 @@
 </template>
 
 <script>
+	import ALLURL from "@/common/allUrl.js";
 	
 	export default {
 
@@ -86,7 +87,7 @@
 					title: '加载中'
 				});
 				uni.request({
-					url: 'http://193.112.16.196:8080/zjzl/SK/json/Z034',
+					url: ALLURL.baseURL + '/zjzl/SK/json/Z034',
 					method: 'POST',
 					data: {
 						// 合同保证金信息

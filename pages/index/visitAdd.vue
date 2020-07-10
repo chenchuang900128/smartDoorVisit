@@ -151,18 +151,18 @@
 					complete: () => {}
 				});
 			},
-			// 请求退款信息
+			// 请求添加访客
 			requestAddVisits: function(formdata, callBack) {
 				uni.showLoading({
 					title: '加载中'
 				});
 				uni.request({
-					url: 'http://193.112.16.196:8080/zjzl/guard/saveForeignVisitors',
+					url: ALLURL.baseURL + ALLURL.KTradeid_addVisit,
 					method: 'POST',
 					data: {
 						roomKey:  ALLURL.ZJValidString(this.fwzl),//房屋标识
 						primaryKey: this.myFormatData.phone,// 唯一标识
-						visitingTime: date,// 来访时间
+						visitingTime: this.date,// 来访时间
 						visitingNum: personArray[personIndex],//来访人数
 						visitingReason: array[index],//来访事由
 						visitorsName: this.myFormatData.name//来访姓名
@@ -173,9 +173,10 @@
 					success: res => {
 						uni.hideLoading();
 						var dataDic = res.data;
-						console.log("退款记录接口调用成功 " + dataDic);
+						console.log("退款记录接口调用成功" + dataDic);
 						if (Number(dataDic['code']) == 0) {
-
+						
+						     callBack(true);
 							// var jsonArr = dataDic["datalist"];
 							// if (jsonArr.length > 0) {
 
@@ -219,10 +220,19 @@
 					return;
 				}
 				
-
-				uni.navigateTo({
-					url: './visitResult/visitResult'
+				this.requestAddVisits({}, function(isRequestSuceess) {
+					
+						if(isRequestSuceess){
+							
+							// 		url: '../refundBzj?xm=' + this.myObjData['xm'] + '&zjhm=' + this.myObjData['zjhm'] + '&appKey=' + this.myObjData[
+							// 			'appKey']
+							
+							uni.navigateTo({
+								url: './visitResult/visitResult?xm=' + formdata['name'] + '&phone=' + formdata['phone']
+							});
+						}
 				});
+				
 				
 			},
 

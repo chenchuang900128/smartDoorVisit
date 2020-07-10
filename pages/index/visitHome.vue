@@ -65,26 +65,24 @@
 		},
 		methods: {
 			gridClick(item, index) { //格子菜单点击事件
-				uni.showModal({
-					content: "暂未开放，敬请期待！",
-				});
-				// if (index == 0) {
+			
+				if (index == 0) {
 
-				// 	uni.navigateTo({
-				// 		// 正向传值
-				// 		url: './visitAdd?xm=' + this.myObjData['xm'] + '&zjhm=' + this.myObjData['zjhm'] + '&appKey=' + this.myObjData[
-				// 			'appKey']
-				// 	});
+					uni.navigateTo({
+						// 正向传值
+						url: './visitAdd?xm=' + this.myObjData['xm'] + '&zjhm=' + this.myObjData['zjhm'] + '&appKey=' + this.myObjData[
+							'appKey']
+					});
 
-				// } else if (index == 1) {
+				} else if (index == 1) {
 
-				// 	uni.navigateTo({
-				// 		// 正向传值
-				// 		url: './visitList/visitList?xm=' + this.myObjData['xm'] + '&zjhm=' + this.myObjData['zjhm'] + '&appKey=' +
-				// 			this.myObjData['appKey']
-				// 	});
+					uni.navigateTo({
+						// 正向传值
+						url: './visitList/visitList?xm=' + this.myObjData['xm'] + '&zjhm=' + this.myObjData['zjhm'] + '&appKey=' +
+							this.myObjData['appKey']
+					});
 
-				// }
+				}
 
 			}
 		}

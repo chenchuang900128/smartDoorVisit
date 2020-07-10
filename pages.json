@@ -30,7 +30,7 @@
 		"backgroundColor": "#F8F8F8",
 		// 是否隐藏导航栏
 		"app-plus": {
-			"titleNView": false
+			"titleNView": true
 		}
 		
 	}
