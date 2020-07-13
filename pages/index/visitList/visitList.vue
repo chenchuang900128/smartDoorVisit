@@ -59,11 +59,7 @@
 		},
 
 		onLoad: function(e) {
-			// let zg;
-			// let  str = util.ZJNoEmptyString(zg);
-			// uni.showModal({
-			// 	content: str,
-			// });
+
 			
 			this.myObjData = {
 				xm: e.xm,
@@ -72,29 +68,72 @@
 			};
 
 			
-			this.requestRefundInfo({}, function(isRequestSuceess) {
-
+			this.requestContractInfo({}, function(isRequestSuceess) {
+					
+					if(isRequestSuceess){
+						
+						this.requestVisitList();
+					}
 			});
 		},
 		methods: {
-
-			openinfo:function(e){
-				
-			},
-			// 请求退款信息
-			requestRefundInfo: function(formdata, callBack) {
+         // 请求合同信息
+			requestContractInfo: function(formdata, callBack) {
 				uni.showLoading({
 					title: '加载中'
 				});
 				uni.request({
-					url: ALLURL.baseURL + '/zjzl/SK/json/Z034',
+					url:    ALLURL.baseURL + '/zjzl/a/info/zjLogin/GIHSSContQuery',
+					method: 'POST',
+					data: {
+						zjhm:this.myObjData.zjhm,
+						appKey:this.myObjData.appKey
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: res => {
+						uni.hideLoading();
+						
+						var dataDic = res.data;
+						console.log("退保证金接口调用成功 " + dataDic);
+						if (Number(dataDic['code']) == 0) {
+							
+							this.fwzl =  ALLURL.ZJValidString(dataDic['data']['fwzl']);
+							callBack(true);
+						}
+						else{
+							
+							uni.showModal({
+								content: dataDic['msg'],
+								showCancel: false
+							});
+						}
+						
+					
+			
+			
+					},
+					fail: () => {
+						uni.hideLoading();
+					},
+					complete: () => {}
+				});
+			},
+			openinfo:function(e){
+				
+			},
+			// 访客记录
+			requestVisitList: function(formdata, callBack) {
+				uni.showLoading({
+					title: '加载中'
+				});
+				uni.request({
+					url: ALLURL.baseURL + ALLURL.KTradeid_visitList,
 					method: 'POST',
 					data: {
 						// 合同保证金信息
-						xm: this.myObjData['xm'],
-						zjhm: this.myObjData['zjhm'],
-						htbh: '',
-						appKey: this.myObjData['appKey'],
+						roomKey: '',
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息

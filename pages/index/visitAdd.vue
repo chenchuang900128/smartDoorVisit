@@ -153,36 +153,34 @@
 			},
 			// 请求添加访客
 			requestAddVisits: function(formdata, callBack) {
+				let requestObj = {roomKey:  ALLURL.ZJValidString(this.fwzl),//房屋标识
+						primaryKey: this.myFormatData.phone,// 唯一标识
+						visitingTime: this.date,// 来访时间
+						visitingNum: this.personArray[this.personIndex],//来访人数
+						visitingReason: this.array[this.index],//来访事由
+						visitorsName: this.myFormatData.name,//来访姓名
+						};
 				uni.showLoading({
 					title: '加载中'
 				});
 				uni.request({
 					url: ALLURL.baseURL + ALLURL.KTradeid_addVisit,
 					method: 'POST',
-					data: {
-						roomKey:  ALLURL.ZJValidString(this.fwzl),//房屋标识
-						primaryKey: this.myFormatData.phone,// 唯一标识
-						visitingTime: this.date,// 来访时间
-						visitingNum: personArray[personIndex],//来访人数
-						visitingReason: array[index],//来访事由
-						visitorsName: this.myFormatData.name//来访姓名
-					},
+					data: requestObj,
 					header: {
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: res => {
 						uni.hideLoading();
 						var dataDic = res.data;
-						console.log("退款记录接口调用成功" + dataDic);
+						console.log("访客接口调用成功" + dataDic);
 						if (Number(dataDic['code']) == 0) {
 						
 						     callBack(true);
-							// var jsonArr = dataDic["datalist"];
-							// if (jsonArr.length > 0) {
-
-							// 	this.seen = true;
-
-							// }
+						
+							uni.navigateTo({
+								url: './visitResult/visitResult?requestObj=' +  JSON.stringify(requestObj) + '&qrcodeText=' + 'chen',
+							});
 
 						} else {
 
@@ -205,14 +203,14 @@
 				var formdata = e.detail.value;
 				this.myFormatData = formdata;
 
-				if (formdata['name'].length < 1) {
+				if (ALLURL.ZJValidString(formdata['name']).length < 1) {
 					uni.showModal({
 						content: '请输入姓名',
 						showCancel: false
 					});
 					return;
 				}
-				if (formdata['phone'].length < 11) {
+				if (ALLURL.ZJValidString(formdata['phone']).length < 11) {
 					uni.showModal({
 						content: '请输入手机号',
 						showCancel: false
@@ -222,15 +220,7 @@
 				
 				this.requestAddVisits({}, function(isRequestSuceess) {
 					
-						if(isRequestSuceess){
-							
-							// 		url: '../refundBzj?xm=' + this.myObjData['xm'] + '&zjhm=' + this.myObjData['zjhm'] + '&appKey=' + this.myObjData[
-							// 			'appKey']
-							
-							uni.navigateTo({
-								url: './visitResult/visitResult?xm=' + formdata['name'] + '&phone=' + formdata['phone']
-							});
-						}
+						
 				});
 				
 				

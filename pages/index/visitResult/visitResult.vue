@@ -33,10 +33,14 @@
 			return {
 				qrcodeText: 'uQRCode',
 				qrcodeSize: 136,
-				qrcodeSrc: ''
+				qrcodeSrc: '',
+				requestObj: {},
 			}
 		},
-		onLoad() {
+		onLoad(e) {
+			
+			this.requestObj = e.requestObj;
+			this.qrcodeText = e.qrcodeText;
 			this.make()
 		},
 		methods: {
@@ -60,6 +64,7 @@
 				})
 			},
 			shareClick() {
+				
                 this.$bridge.callHandler('shareClick', '', res => {
 					
 				});
