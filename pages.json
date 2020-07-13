@@ -20,7 +20,7 @@
         }
         ,{
             "path" : "pages/index/visitList/visitList",
-            "style" : {}
+            "style" : {"navigationBarTitleText": "访客"}
         }
     ],
 	"globalStyle": {

@@ -38,7 +38,7 @@
 			}
 		},
 		onLoad(e) {
-			
+
 			this.requestObj = e.requestObj;
 			this.qrcodeText = e.qrcodeText;
 			this.make()
@@ -64,9 +64,9 @@
 				})
 			},
 			shareClick() {
-				
-                this.$bridge.callHandler('shareClick', '', res => {
-					
+
+				this.$bridge.callHandler('shareClick', '', res => {
+
 				});
 			},
 			sendMsgClick() {

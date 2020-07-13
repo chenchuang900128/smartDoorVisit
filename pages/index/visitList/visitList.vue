@@ -55,6 +55,7 @@
 				refundList: [],
 				seen: false,
 				errMsg: '',
+				fwzl:'',
 			};
 		},
 
@@ -133,7 +134,7 @@
 					method: 'POST',
 					data: {
 						// 合同保证金信息
-						roomKey: '',
+						roomKey: this.fwzl,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
@@ -141,7 +142,7 @@
 					success: res => {
 						uni.hideLoading();
 						var dataDic = res.data.data;
-						console.log("退款记录接口调用成功 " + dataDic);
+						console.log("访客记录接口调用成功 " + dataDic);
 						if (Number(res.data['code']) == 0) {
 
 							var jsonArr = dataDic["dataList"];
