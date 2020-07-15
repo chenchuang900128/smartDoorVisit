@@ -1,4 +1,5 @@
 
+// http://192.168.43.125:8080  http://193.112.16.196:8080
 const baseURL = 'http://193.112.16.196:8080';
 
 const KTradeid_addVisit = '/zjzl/guard/saveForeignVisitors';
@@ -23,7 +24,6 @@ function ZJNoEmptyString(obj) {
 	}
 	return obj;
 }
-
 
 
 

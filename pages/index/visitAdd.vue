@@ -8,14 +8,12 @@
 
 			<view class="line"></view>
 
-			<view class="inputView">
+	<!-- 		<view class="inputView">
 				<text class="leftTitle">访客手机号</text>
 				<input class="rightInput" name="phone" value="13249752918" placeholder="请输入证件号码" />
 			</view>
 
-
-
-			<view class="line"></view>
+			<view class="line"></view> -->
 
 			<view class="inputView">
 				<text class="leftTitle">来访人数</text>
@@ -77,7 +75,7 @@
 				index: 0,
 				array: ['搬家放行', '送货上门', '装修放行', '家政服务', '朋友来访'],
 				personIndex: 0,
-				personArray: ['1人', '2人', '3人', '4人', '5人', '6人'],
+				personArray: ['1', '2', '3', '4', '5', '6'],
 				date: currentDate,
 				fwzl: '',
 				myFormatData: {},
@@ -99,6 +97,12 @@
 				xm: e.xm,
 				zjhm: e.zjhm,
 				appKey: e.appKey
+			};
+			
+			this.myObjData = {
+				xm: '陈创',
+				zjhm: '430423199001281412',
+				appKey: '6f2519e6d1f7aa80f88dde9ae0934c44'
 			};
 		 
 		   console.log(ALLURL.baseURL);
@@ -127,10 +131,10 @@
 						uni.hideLoading();
 						
 						var dataDic = res.data;
-						console.log("退保证金接口调用成功 " + dataDic);
+						console.log("合同查询接口调用成功 " + JSON.stringify(dataDic));
 						if (Number(dataDic['code']) == 0) {
 							
-							this.fwzl =  ALLURL.ZJValidString(dataDic['data']['fwzl']);
+							this.fwzl =  ALLURL.ZJValidString(dataDic['data']['fyid']);
 							
 						}
 						else{
@@ -155,11 +159,12 @@
 			requestAddVisits: function(formdata, callBack) {
 				let requestObj = {roomKey:  ALLURL.ZJValidString(this.fwzl),//房屋标识
 						primaryKey: this.myFormatData.phone,// 唯一标识
-						visitingTime: this.date,// 来访时间
+						visitingTime: this.date + ' 00:00:00',// 来访时间
 						visitingNum: this.personArray[this.personIndex],//来访人数
 						visitingReason: this.array[this.index],//来访事由
-						visitorsName: this.myFormatData.name,//来访姓名
+						visitingName: this.myFormatData.name,//来访姓名
 						};
+				console.log("请求参数=" + JSON.stringify(requestObj));
 				uni.showLoading({
 					title: '加载中'
 				});
@@ -173,13 +178,13 @@
 					success: res => {
 						uni.hideLoading();
 						var dataDic = res.data;
-						console.log("访客接口调用成功" + dataDic);
+						console.log("访客接口调用成功" + JSON.stringify(res));
 						if (Number(dataDic['code']) == 0) {
 						
 						     callBack(true);
 						
 							uni.navigateTo({
-								url: './visitResult/visitResult?requestObj=' +  JSON.stringify(requestObj) + '&qrcodeText=' + 'chen',
+								url: './visitResult/visitResult?requestObj=' +  JSON.stringify(requestObj) + '&qrcodeText=' + dataDic['data'],
 							});
 
 						} else {
@@ -203,20 +208,14 @@
 				var formdata = e.detail.value;
 				this.myFormatData = formdata;
 
-				if (ALLURL.ZJValidString(formdata['name']).length < 1) {
+				if ((ALLURL.ZJValidString(formdata['name'])).length < 1) {
 					uni.showModal({
 						content: '请输入姓名',
 						showCancel: false
 					});
 					return;
 				}
-				if (ALLURL.ZJValidString(formdata['phone']).length < 11) {
-					uni.showModal({
-						content: '请输入手机号',
-						showCancel: false
-					});
-					return;
-				}
+			
 				
 				this.requestAddVisits({}, function(isRequestSuceess) {
 					

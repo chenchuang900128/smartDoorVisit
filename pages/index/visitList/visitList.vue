@@ -1,5 +1,5 @@
 <template>
-	<view class="content" > 
+	<view class="content">
 		<view class="uni-list" v-if="seen">
 			<!-- 分割线 -->
 			<view class="lineVTop"></view>
@@ -46,7 +46,7 @@
 
 <script>
 	import ALLURL from "@/common/allUrl.js";
-	
+
 	export default {
 
 		data() {
@@ -55,65 +55,72 @@
 				refundList: [],
 				seen: false,
 				errMsg: '',
-				fwzl:'',
+				fwzl: '',
 			};
 		},
 
 		onLoad: function(e) {
 
-			
+
 			this.myObjData = {
 				xm: e.xm,
 				zjhm: e.zjhm,
 				appKey: e.appKey
 			};
+			this.myObjData = {
+				xm: '陈创',
+				zjhm: '430423199001281412',
+				appKey: 'fe8c09cb3d927e839930849f22e60263'
+			};
 
-			
+			var that = this;
 			this.requestContractInfo({}, function(isRequestSuceess) {
-					
-					if(isRequestSuceess){
-						
-						this.requestVisitList();
-					}
+
+				console.log('回调成功');
+				if (isRequestSuceess) {
+
+					that.requestVisitList({}, function(requestSucess) {
+
+					});
+				}
 			});
 		},
 		methods: {
-         // 请求合同信息
+			// 请求合同信息
 			requestContractInfo: function(formdata, callBack) {
 				uni.showLoading({
 					title: '加载中'
 				});
 				uni.request({
-					url:    ALLURL.baseURL + '/zjzl/a/info/zjLogin/GIHSSContQuery',
+					url: ALLURL.baseURL + '/zjzl/a/info/zjLogin/GIHSSContQuery',
 					method: 'POST',
 					data: {
-						zjhm:this.myObjData.zjhm,
-						appKey:this.myObjData.appKey
+						zjhm: this.myObjData.zjhm,
+						appKey: this.myObjData.appKey
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: res => {
 						uni.hideLoading();
-						
+
 						var dataDic = res.data;
-						console.log("退保证金接口调用成功 " + dataDic);
+						console.log("合同查询接口调用成功 " + JSON.stringify(dataDic));
 						if (Number(dataDic['code']) == 0) {
-							
-							this.fwzl =  ALLURL.ZJValidString(dataDic['data']['fwzl']);
+
+							this.fwzl = ALLURL.ZJValidString(dataDic['data']['fyid']);
 							callBack(true);
-						}
-						else{
-							
+						} else {
+
 							uni.showModal({
 								content: dataDic['msg'],
 								showCancel: false
 							});
 						}
-						
-					
-			
-			
+
+
+
+
 					},
 					fail: () => {
 						uni.hideLoading();
@@ -121,9 +128,7 @@
 					complete: () => {}
 				});
 			},
-			openinfo:function(e){
-				
-			},
+
 			// 访客记录
 			requestVisitList: function(formdata, callBack) {
 				uni.showLoading({
@@ -142,7 +147,7 @@
 					success: res => {
 						uni.hideLoading();
 						var dataDic = res.data.data;
-						console.log("访客记录接口调用成功 " + dataDic);
+						console.log("访客记录接口调用成功 " + JSON.stringify(dataDic));
 						if (Number(res.data['code']) == 0) {
 
 							var jsonArr = dataDic["dataList"];
@@ -158,15 +163,15 @@
 
 								}
 							}
-							if(this.refundList.length < 1){
-								
-								this.errMsg =  '暂无数据';
-								
+							if (this.refundList.length < 1) {
+
+								this.errMsg = '暂无数据';
+
 							}
 						} else {
-						
-						   this.errMsg =  res.data['msg'];
-							
+
+							this.errMsg = res.data['msg'];
+
 						}
 
 
@@ -197,7 +202,7 @@
 	.uni-list-cell {
 		padding-top: 16rpx;
 		padding-bottom: -16rpx;
-		width:  100%;
+		width: 100%;
 		height: auto;
 	}
 
@@ -232,12 +237,13 @@
 		font-size: 28rpx;
 		color: #333333;
 	}
-	.errText{
-		
+
+	.errText {
+
 		width: 100vw;
 		height: 44rpx;
 		margin-top: 46vh;
 		text-align: center;
-		
+
 	}
 </style>

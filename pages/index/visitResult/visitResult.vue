@@ -5,23 +5,23 @@
 			<canvas canvas-id="qrcode" :style="{width: `${qrcodeSize}px`, height: `${qrcodeSize}px`}" />
 		</view>
 
-		<text class="list-text">{{ '姓名:' + ' ' + '陈创'}}
+		<text class="list-text">{{ '姓名:' + ' ' + this.requestObj.visitingName}}
 		</text>
 
-		<text class="list-text"> {{ '手机号:' + '  ' + '18320167762'}}
+<!-- 		<text class="list-text"> {{ '手机号:' + '  ' + '18320167762'}}
+		</text> -->
+
+		<text class="list-text"> {{ '来访人数:' + '  ' + this.requestObj.visitingNum}}
 		</text>
 
-		<text class="list-text"> {{ '来访人数:' + '  ' + '2人'}}
+		<text class="list-text"> {{ '来访事由:' + '  ' + this.requestObj.visitingReason}}
 		</text>
 
-		<text class="list-text"> {{ '来访事由:' + '  ' + '搬家放行'}}
-		</text>
-
-		<text class="list-text"> {{ '来访日期:' + '  ' + '2020-06-16'}}
+		<text class="list-text"> {{ '来访日期:' + '  ' + this.requestObj.visitingTime}}
 		</text>
 
 		<button class="button" type="primary" @tap="shareClick()">微信分享</button>
-		<button class="button" type="default" @tap="sendMsgClick()">短信发送</button>
+		<!-- <button class="button" type="default" @tap="sendMsgClick()">短信发送</button> -->
 	</view>
 </template>
 
@@ -38,9 +38,12 @@
 			}
 		},
 		onLoad(e) {
-
-			this.requestObj = e.requestObj;
-			this.qrcodeText = e.qrcodeText;
+			
+			console.log('接收参数 ' + typeof(e.requestObj));
+			this.qrcodeText =  e.qrcodeText;
+			
+			this.requestObj =  JSON.parse(e.requestObj);
+			
 			this.make()
 		},
 		methods: {
