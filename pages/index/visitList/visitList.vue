@@ -7,33 +7,35 @@
 			<view class="uni-list-cell" hover-class="uni-list-cell-hover" v-for="(item, index) in refundList" :key="index" @tap="openinfo"
 			 :data-newsid="item.htbh">
 
+
 				<text class="list-text"> 姓名:
-					<text class="list-textValue">{{ item.xm + '\n'}}</text>
+					<text class="list-textValue">{{'' + item.xm}}
+					</text>
+					<text class="checkbtnText">{{'查看详情' + '\n'}}</text>
+
 				</text>
 
-				<text class="list-text"> 证件号码:
+				<text class="list-text"> 来访人数:
 					<text class="list-textValue">{{ item.zjhm + '\n'}}</text>
 				</text>
 
-				<text class="list-text"> 合同编号:
+				<text class="list-text"> 来访事由:
 					<text class="list-textValue">{{ item.htbh + '\n'}}</text>
 				</text>
 
-				<text class="list-text"> 保证金金额:
+				<text class="list-text"> 来访原因:
 					<text class="list-textValue">{{(item.sjbzje) + '\n'}}</text>
 				</text>
 
-				<text class="list-text"> 退款银行:
+				<text class="list-text"> 来访时间:
 					<text class="list-textValue">{{item.yhmc + '\n'}}</text>
 				</text>
 
-				<text class="list-text"> 退款账号:
+				<!-- <text class="list-text"> 退款账号:
 					<text class="list-textValue">{{item.yhkh + '\n'}}</text>
-				</text>
+				</text> -->
 
-				<text class="list-text"> 退款状态:
-					<text class="list-textValue">{{ (item.bzjjnzt=='3')?'已退款':'退款中' + '\n'}}</text>
-				</text>
+
 
 				<!-- 分割线 -->
 				<view class="lineV"></view>
@@ -146,20 +148,18 @@
 					},
 					success: res => {
 						uni.hideLoading();
-						var dataDic = res.data.data;
+						var dataDic = res.data;
 						console.log("访客记录接口调用成功 " + JSON.stringify(dataDic));
 						if (Number(res.data['code']) == 0) {
 
-							var jsonArr = dataDic["dataList"];
+							var jsonArr = dataDic["data"];
 							if (jsonArr.length > 0) {
 
 								this.seen = true;
 								for (let item of jsonArr) {
-									if (item['bzjzt'] !== "1") {
 
-										this.refundList.push(item);
+									this.refundList.push(item);
 
-									}
 
 								}
 							}
@@ -182,6 +182,10 @@
 					complete: () => {}
 				});
 			},
+			openinfo: function(e) {
+
+
+			}
 
 		}
 	};
@@ -233,9 +237,18 @@
 	.list-textValue {
 		margin-left: 24rpx;
 		line-height: 54rpx;
-		width: 100%;
+		width: 30%;
 		font-size: 28rpx;
 		color: #333333;
+	}
+
+	.checkbtnText {
+		margin-left: 50%;
+		margin-right: 30rpx;
+		line-height: 54rpx;
+		width: 20%;
+		font-size: 26rpx;
+		color: #007AFF;
 	}
 
 	.errText {
