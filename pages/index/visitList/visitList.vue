@@ -4,31 +4,28 @@
 			<!-- 分割线 -->
 			<view class="lineVTop"></view>
 			<!-- 自定义了一个data-id的属性,可以通过js获取到它的值!  hover-class 指定按下去的样式类-->
-			<view class="uni-list-cell" hover-class="uni-list-cell-hover" v-for="(item, index) in refundList" :key="index" @tap="openinfo"
-			 :data-newsid="item.htbh">
+			<view class="uni-list-cell" hover-class="uni-list-cell-hover" v-for="(item, index) in visitList" :key="index" @tap="openinfo"
+			 :data-newsid="item.visitorId" :data-index="index">
 
 
 				<text class="list-text"> 姓名:
-					<text class="list-textValue">{{'' + item.xm}}
+					<text class="list-textValue">{{'' + item.name}}
 					</text>
-					<text class="checkbtnText">{{'查看详情' + '\n'}}</text>
+					<text class="checkbtnText">{{'查看二维码' + '\n'}}</text>
 
 				</text>
 
 				<text class="list-text"> 来访人数:
-					<text class="list-textValue">{{ item.zjhm + '\n'}}</text>
+					<text class="list-textValue">{{ item.visitingNum + '\n'}}</text>
 				</text>
 
 				<text class="list-text"> 来访事由:
-					<text class="list-textValue">{{ item.htbh + '\n'}}</text>
+					<text class="list-textValue">{{ item.visitingReason + '\n'}}</text>
 				</text>
 
-				<text class="list-text"> 来访原因:
-					<text class="list-textValue">{{(item.sjbzje) + '\n'}}</text>
-				</text>
 
 				<text class="list-text"> 来访时间:
-					<text class="list-textValue">{{item.yhmc + '\n'}}</text>
+					<text class="list-textValue">{{item.visitingTime + '\n'}}</text>
 				</text>
 
 				<!-- <text class="list-text"> 退款账号:
@@ -54,7 +51,7 @@
 		data() {
 			return {
 				myObjData: {},
-				refundList: [],
+				visitList: [],
 				seen: false,
 				errMsg: '',
 				fwzl: '',
@@ -62,7 +59,6 @@
 		},
 
 		onLoad: function(e) {
-
 
 			this.myObjData = {
 				xm: e.xm,
@@ -114,10 +110,8 @@
 							callBack(true);
 						} else {
 
-							uni.showModal({
-								content: dataDic['msg'],
-								showCancel: false
-							});
+							this.errMsg = '暂无数据';
+
 						}
 
 
@@ -150,20 +144,19 @@
 						uni.hideLoading();
 						var dataDic = res.data;
 						console.log("访客记录接口调用成功 " + JSON.stringify(dataDic));
-						if (Number(res.data['code']) == 0) {
+						if (Number(dataDic['code']) == 0) {
 
 							var jsonArr = dataDic["data"];
 							if (jsonArr.length > 0) {
 
 								this.seen = true;
-								for (let item of jsonArr) {
+								this.visitList = jsonArr;
+								// for (let item of jsonArr) {
 
-									this.refundList.push(item);
+								// 	this.visitList.push(item);
 
-
-								}
-							}
-							if (this.refundList.length < 1) {
+								// }
+							} else {
 
 								this.errMsg = '暂无数据';
 
@@ -183,8 +176,13 @@
 				});
 			},
 			openinfo: function(e) {
+				let myIndex = Number(e.currentTarget.dataset.index);
+				console.log('点击序列' + JSON.stringify(e.currentTarget));
+				uni.navigateTo({
 
-
+					url: './visitViewQr?requestObj=' + JSON.stringify(this.visitList[myIndex]) + '&qrcodeText=' + e.currentTarget.dataset
+						.newsid,
+				});
 			}
 
 		}
@@ -243,12 +241,14 @@
 	}
 
 	.checkbtnText {
-		margin-left: 50%;
-		margin-right: 30rpx;
+		margin-left: 46%;
+		margin-right: 20rpx;
 		line-height: 54rpx;
-		width: 20%;
+		width: 80rpx;
+		height: 54rpx;
 		font-size: 26rpx;
 		color: #007AFF;
+
 	}
 
 	.errText {

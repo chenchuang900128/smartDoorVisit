@@ -22,6 +22,10 @@
             "path" : "pages/index/visitList/visitList",
             "style" : {"navigationBarTitleText": "访客记录"}
         }
+,{
+            "path" : "pages/index/visitList/visitViewQr",
+            "style" : {"navigationBarTitleText": "访客记录"}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
