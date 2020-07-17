@@ -8,12 +8,12 @@
 
 			<view class="line"></view>
 
-	<!-- 		<view class="inputView">
+			<view class="inputView">
 				<text class="leftTitle">访客手机号</text>
 				<input class="rightInput" name="phone" value="13249752918" placeholder="请输入证件号码" />
 			</view>
 
-			<view class="line"></view> -->
+			<view class="line"></view>
 
 			<view class="inputView">
 				<text class="leftTitle">来访人数</text>
@@ -22,7 +22,7 @@
 				</picker>
 				<image class="arrowImg0" mode="aspectFit" src="../../static/arrow_right@2x.png"></image>
 			</view>
-			
+
 			<view class="line"></view>
 
 			<view class="inputView">
@@ -50,7 +50,7 @@
 				<button class="botBtn" type="primary" form-type="submit">下一步</button>
 				<view class="tipText"> </view>
 			</view>
-			
+
 		</form>
 	</view>
 </template>
@@ -98,18 +98,18 @@
 				zjhm: e.zjhm,
 				appKey: e.appKey
 			};
-			
+
 			this.myObjData = {
 				xm: '陈创',
 				zjhm: '430423199001281412',
 				appKey: '6f2519e6d1f7aa80f88dde9ae0934c44'
 			};
-		 
-		   console.log(ALLURL.baseURL);
-		   console.log('中国=' + this.fwzl);
-		   this.requestContractInfo();
-		   
-		   
+
+			console.log(ALLURL.baseURL);
+			console.log('中国=' + this.fwzl);
+			this.requestContractInfo();
+
+
 		},
 		methods: {
 			// 请求合同信息
@@ -118,36 +118,35 @@
 					title: '加载中'
 				});
 				uni.request({
-					url:    ALLURL.baseURL + '/zjzl/a/info/zjLogin/GIHSSContQuery',
+					url: ALLURL.baseURL + '/zjzl/a/info/zjLogin/GIHSSContQuery',
 					method: 'POST',
 					data: {
-						zjhm:this.myObjData.zjhm,
-						appKey:this.myObjData.appKey
+						zjhm: this.myObjData.zjhm,
+						appKey: this.myObjData.appKey
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: res => {
 						uni.hideLoading();
-						
+
 						var dataDic = res.data;
 						console.log("合同查询接口调用成功 " + JSON.stringify(dataDic));
 						if (Number(dataDic['code']) == 0) {
-							
-							this.fwzl =  ALLURL.ZJValidString(dataDic['data']['fyid']);
-							
-						}
-						else{
-							
+
+							this.fwzl = ALLURL.ZJValidString(dataDic['data']['fyid']);
+
+						} else {
+
 							uni.showModal({
 								content: dataDic['msg'],
 								showCancel: false
 							});
 						}
-						
-					
-			
-			
+
+
+
+
 					},
 					fail: () => {
 						uni.hideLoading();
@@ -157,13 +156,16 @@
 			},
 			// 请求添加访客
 			requestAddVisits: function(formdata, callBack) {
-				let requestObj = {roomKey:  ALLURL.ZJValidString(this.fwzl),//房屋标识
-						primaryKey: this.myFormatData.phone,// 唯一标识
-						visitingTime: this.date + ' 00:00:00',// 来访时间
-						visitingNum: this.personArray[this.personIndex],//来访人数
-						visitingReason: this.array[this.index],//来访事由
-						visitingName: this.myFormatData.name,//来访姓名
-						};
+				
+				let requestObj = {
+					roomKey: ALLURL.ZJValidString(this.fwzl), //房屋标识
+					phone: this.myFormatData.phone, // 唯一标识
+					visitingTime: this.date + ' 00:00:00', // 来访时间
+					visitingNum: this.personArray[this.personIndex], //来访人数
+					visitingReason: this.array[this.index], //来访事由
+					visitingName: this.myFormatData.name, //来访姓名
+					primaryKey: '',
+				};
 				console.log("请求参数=" + JSON.stringify(requestObj));
 				uni.showLoading({
 					title: '加载中'
@@ -180,11 +182,12 @@
 						var dataDic = res.data;
 						console.log("访客接口调用成功" + JSON.stringify(res));
 						if (Number(dataDic['code']) == 0) {
-						
-						     callBack(true);
-						
+
+							callBack(true);
+
 							uni.navigateTo({
-								url: './visitResult/visitResult?requestObj=' +  JSON.stringify(requestObj) + '&qrcodeText=' + dataDic['data'],
+								url: './visitResult/visitResult?requestObj=' + JSON.stringify(requestObj) + '&qrcodeText=' + dataDic[
+									'data'],
 							});
 
 						} else {
@@ -215,14 +218,21 @@
 					});
 					return;
 				}
-			
-				
+				if ((ALLURL.ZJValidString(formdata['phone'])).length < 11) {
+					uni.showModal({
+						content: '请输入手机号码',
+						showCancel: false
+					});
+					return;
+				}
+
+
 				this.requestAddVisits({}, function(isRequestSuceess) {
-					
-						
+
+
 				});
-				
-				
+
+
 			},
 
 			bindDateChange: function(e) {

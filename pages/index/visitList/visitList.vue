@@ -14,7 +14,11 @@
 					<text class="checkbtnText">{{'查看二维码' + '\n'}}</text>
 
 				</text>
-
+				
+	           <text class="list-text"> 手机号:
+					<text class="list-textValue">{{ item.phone + '\n'}}</text>
+				</text>
+				
 				<text class="list-text"> 来访人数:
 					<text class="list-textValue">{{ item.visitingNum + '\n'}}</text>
 				</text>
