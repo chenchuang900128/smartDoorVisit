@@ -245,7 +245,7 @@
 	}
 
 	.checkbtnText {
-		margin-left: 46%;
+		margin-left: 52%;
 		margin-right: 20rpx;
 		line-height: 54rpx;
 		width: 80rpx;

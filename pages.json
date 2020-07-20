@@ -31,7 +31,7 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8",
+		"backgroundColor": "#FFFFFF",
 		// 是否隐藏导航栏
 		"app-plus": {
 			"titleNView": true

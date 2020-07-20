@@ -5,7 +5,7 @@
 			<canvas canvas-id="qrcode" :style="{width: `${qrcodeSize}px`, height: `${qrcodeSize}px`}" />
 		</view>
 
-		<text class="list-text">{{ '姓名:' + ' ' + this.requestObj.visitorsName}}
+		<text class="list-text">{{ '姓名:' + '  ' + this.requestObj.name}}
 		</text>
 
 		<text class="list-text"> {{ '手机号:' + '  ' + this.requestObj.phone}}
