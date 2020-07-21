@@ -1,5 +1,4 @@
 <script>
-	import ALLURL from "@/common/allUrl.js";
 	
 	export default {
 		onLaunch: function() {

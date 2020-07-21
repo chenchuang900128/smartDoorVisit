@@ -27,6 +27,7 @@
 
 <script>
 	import uQRCode from '@/common/uqrcode.js'
+	import ALLURL from "@/common/allUrl.js";
 
 	export default {
 		data() {
@@ -40,9 +41,13 @@
 		onLoad(e) {
 			
 			console.log('接收参数 ' + typeof(e.requestObj));
-			this.qrcodeText =  e.qrcodeText;
+			this.qrcodeText =  ALLURL.ZJValidString(e.qrcodeText);
 			
-			this.requestObj =  JSON.parse(e.requestObj);
+			if(typeof (e.requestObj) === 'string'){
+				
+				this.requestObj =  JSON.parse(e.requestObj);
+				
+			}
 			
 			this.make()
 		},

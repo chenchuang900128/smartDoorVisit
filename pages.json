@@ -5,28 +5,29 @@
 			"style": {
 				"navigationBarTitleText": "访客"
 			}
-		},	
+		},
 		{
 			"path": "pages/index/visitAdd",
 			"style": {
 				"navigationBarTitleText": "访客添加"
 			}
-		}
-	    ,{
-            "path" : "pages/index/visitResult/visitResult",
-            "style" : {
+		}, {
+			"path": "pages/index/visitResult/visitResult",
+			"style": {
 				"navigationBarTitleText": "访客添加"
 			}
-        }
-        ,{
-            "path" : "pages/index/visitList/visitList",
-            "style" : {"navigationBarTitleText": "访客记录"}
-        }
-,{
-            "path" : "pages/index/visitList/visitViewQr",
-            "style" : {"navigationBarTitleText": "访客记录"}
-        }
-    ],
+		}, {
+			"path": "pages/index/visitList/visitList",
+			"style": {
+				"navigationBarTitleText": "访客记录"
+			}
+		}, {
+			"path": "pages/index/visitList/visitViewQr",
+			"style": {
+				"navigationBarTitleText": "访客记录"
+			}
+		}
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
@@ -34,8 +35,8 @@
 		"backgroundColor": "#FFFFFF",
 		// 是否隐藏导航栏
 		"app-plus": {
-			"titleNView": true
+			"titleNView": false
 		}
-		
+
 	}
 }

@@ -3,14 +3,14 @@
 		<form @submit="formSubmit" @reset="formReset">
 			<view class="inputView">
 				<text class="leftTitle">访客姓名</text>
-				<input class="rightInput" name="name" value="陈德" placeholder="请输入姓名" />
+				<input class="rightInput" name="name" value="" placeholder="请输入姓名" />
 			</view>
 
 			<view class="line"></view>
 
 			<view class="inputView">
 				<text class="leftTitle">访客手机号</text>
-				<input class="rightInput" name="phone" value="13249752918" placeholder="请输入证件号码" />
+				<input class="rightInput" name="phone" value="" placeholder="请输入手机号" />
 			</view>
 
 			<view class="line"></view>
@@ -96,18 +96,21 @@
 			this.myObjData = {
 				xm: e.xm,
 				zjhm: e.zjhm,
-				appKey: e.appKey
+				appKey: e.appKey,
 			};
+			this.fwzl = ALLURL.ZJValidString(e.fyid);
 
-			this.myObjData = {
-				xm: '陈创',
-				zjhm: '430423199001281412',
-				appKey: '6f2519e6d1f7aa80f88dde9ae0934c44'
-			};
-
+			uni.showModal({
+				content: '传输数据: ' + JSON.stringify(this.fwzl),
+			});
 			console.log(ALLURL.baseURL);
 			console.log('中国=' + this.fwzl);
-			this.requestContractInfo();
+
+			if (this.fwzl.length < 1) {
+
+				this.requestContractInfo();
+
+			}
 
 
 		},
@@ -146,7 +149,6 @@
 
 
 
-
 					},
 					fail: () => {
 						uni.hideLoading();
@@ -156,7 +158,7 @@
 			},
 			// 请求添加访客
 			requestAddVisits: function(formdata, callBack) {
-				
+
 				let requestObj = {
 					roomKey: ALLURL.ZJValidString(this.fwzl), //房屋标识
 					phone: this.myFormatData.phone, // 唯一标识

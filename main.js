@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import App from './App'
-import ALLURL from "@/common/allUrl.js";
 
 Vue.config.productionTip = false
 

@@ -10,7 +10,7 @@ const KTradeid_visitList = '/zjzl/guard/getForeignVisitorsList';
 function ZJValidString(obj) {
 	
 	let str = '';
-	if(typeof(obj) == "undefined"){
+	if(typeof(obj) === 'undefined'){
 		return str;
 	}
 	return obj;
@@ -19,7 +19,7 @@ function ZJValidString(obj) {
 function ZJNoEmptyString(obj) {
 	
 	let str = '--';
-	if(typeof(obj) == "undefined"){
+	if(typeof(obj) === 'undefined'){
 		return str;
 	}
 	return obj;

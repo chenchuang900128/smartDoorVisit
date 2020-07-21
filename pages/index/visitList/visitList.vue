@@ -8,12 +8,12 @@
 			 :data-newsid="item.visitorId" :data-index="index">
 
 
-				<text class="list-text"> 姓名:
+				<view class="list-text">姓名:
 					<text class="list-textValue">{{'' + item.name}}
 					</text>
-					<text class="checkbtnText">{{'查看二维码' + '\n'}}</text>
+					<view class="checkbtnText">{{'查看二维码'}}</view>
 
-				</text>
+				</view>
 				
 	           <text class="list-text"> 手机号:
 					<text class="list-textValue">{{ item.phone + '\n'}}</text>
@@ -69,23 +69,31 @@
 				zjhm: e.zjhm,
 				appKey: e.appKey
 			};
-			this.myObjData = {
-				xm: '陈创',
-				zjhm: '430423199001281412',
-				appKey: 'fe8c09cb3d927e839930849f22e60263'
-			};
-
-			var that = this;
-			this.requestContractInfo({}, function(isRequestSuceess) {
-
-				console.log('回调成功');
-				if (isRequestSuceess) {
-
-					that.requestVisitList({}, function(requestSucess) {
-
-					});
-				}
-			});
+		
+			this.fwzl =  ALLURL.ZJValidString(e.fyid);
+			
+			if(this.fwzl.length < 1){
+				
+				var that = this;
+				this.requestContractInfo({}, function(isRequestSuceess) {
+				
+					console.log('回调成功');
+					if (isRequestSuceess) {
+				
+						that.requestVisitList({}, function(requestSucess) {
+				
+						});
+					}
+				});
+				
+			}
+			else{
+				
+				this.requestVisitList({}, function(requestSucess) {
+								
+				});
+			}
+			
 		},
 		methods: {
 			// 请求合同信息
@@ -167,7 +175,7 @@
 							}
 						} else {
 
-							this.errMsg = res.data['msg'];
+							this.errMsg = '暂无数据';
 
 						}
 
@@ -229,30 +237,35 @@
 
 
 	.list-text {
-		margin-left: 40rpx;
+		
+		flex-direction: row;
+		margin-left: 6%;
 		line-height: 52rpx;
-		width: 100%;
+		height: 52rpx;
+		width: 95%;
 		font-size: 26rpx;
 		color: #666666;
 	}
 
 	.list-textValue {
 		margin-left: 24rpx;
-		line-height: 54rpx;
+		line-height: 52rpx;
 		width: 30%;
 		font-size: 28rpx;
 		color: #333333;
 	}
 
 	.checkbtnText {
-		margin-left: 52%;
-		margin-right: 20rpx;
-		line-height: 54rpx;
-		width: 80rpx;
-		height: 54rpx;
+		margin-left: 77%;
+		margin-top: -52rpx;
+		width: 142rpx;
 		font-size: 26rpx;
 		color: #007AFF;
-
+		height: 52rpx;
+		border-width: 2rpx;
+		border-color: #C0C0C0;
+		border-radius: 8rpx;
+		
 	}
 
 	.errText {

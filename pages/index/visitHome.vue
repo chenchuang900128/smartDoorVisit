@@ -51,27 +51,35 @@
 
 				}
 
-				// uni.showModal({
-				// 	content: '传输数据: ' + JSON.stringify(this.myObjData),
-				// });
+
+
+				uni.showModal({
+					content: '传输数据: ' + JSON.stringify(this.myObjData),
+				});
 
 				responseCallback(data);
 				// oc调用js
 			});
 			//	#endif
 
-
+			// this.myObjData = {
+			// 	xm: '陈创',
+			// 	zjhm: '430423199001281412',
+			// 	appKey: '25b5bafd7c305d8bc3aab074f4071873',
+			// 	fyid: '7671432352',
+			// 	xqmc: '江云轩'
+			// };
 
 		},
 		methods: {
 			gridClick(item, index) { //格子菜单点击事件
-			
+
 				if (index == 0) {
 
 					uni.navigateTo({
 						// 正向传值
 						url: './visitAdd?xm=' + this.myObjData['xm'] + '&zjhm=' + this.myObjData['zjhm'] + '&appKey=' + this.myObjData[
-							'appKey']
+							'appKey'] + '&fyid=' + this.myObjData['fyid']
 					});
 
 				} else if (index == 1) {
@@ -79,7 +87,7 @@
 					uni.navigateTo({
 						// 正向传值
 						url: './visitList/visitList?xm=' + this.myObjData['xm'] + '&zjhm=' + this.myObjData['zjhm'] + '&appKey=' +
-							this.myObjData['appKey']
+							this.myObjData['appKey'] + '&fyid=' + this.myObjData['fyid']
 					});
 
 				}
