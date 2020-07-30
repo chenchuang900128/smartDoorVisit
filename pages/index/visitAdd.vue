@@ -1,6 +1,6 @@
 <template>
-	<view class="content" v-if="seen">
-		<form @submit="formSubmit" @reset="formReset">
+	<view class="content" >
+		<form @submit="formSubmit" @reset="formReset" v-if="seen">
 			<view class="inputView">
 				<text class="leftTitle">访客姓名</text>
 				<input class="rightInput" name="name" value="" placeholder="请输入姓名" />
@@ -52,6 +52,8 @@
 			</view>
 
 		</form>
+		<text class="errText">{{errMsg}}</text>
+		
 	</view>
 </template>
 
@@ -71,7 +73,7 @@
 				format: true
 			});
 			return {
-				seen: true,
+				seen: false,
 				index: 0,
 				array: ['搬家放行', '送货上门', '装修放行', '家政服务', '朋友来访'],
 				personIndex: 0,
@@ -80,6 +82,8 @@
 				fwzl: '',
 				myFormatData: {},
 				myObjData: {},
+				errMsg: '',
+				
 
 			};
 		},
@@ -98,18 +102,19 @@
 				zjhm: e.zjhm,
 				appKey: e.appKey,
 			};
+
+			// uni.showModal({
+			// 	content: '传输数据: ' + JSON.stringify(this.fwzl),
+			// });
+	
 			this.fwzl = ALLURL.ZJValidString(e.fyid);
-
-			uni.showModal({
-				content: '传输数据: ' + JSON.stringify(this.fwzl),
-			});
-			console.log(ALLURL.baseURL);
-			console.log('中国=' + this.fwzl);
-
 			if (this.fwzl.length < 1) {
 
 				this.requestContractInfo();
 
+			}
+			else{
+				this.seen = true;
 			}
 
 
@@ -136,15 +141,17 @@
 						var dataDic = res.data;
 						console.log("合同查询接口调用成功 " + JSON.stringify(dataDic));
 						if (Number(dataDic['code']) == 0) {
-
+							
+							this.seen = true;
 							this.fwzl = ALLURL.ZJValidString(dataDic['data']['fyid']);
 
 						} else {
-
-							uni.showModal({
-								content: dataDic['msg'],
-								showCancel: false
-							});
+							
+							this.errMsg = dataDic['msg'];
+							// uni.showModal({
+							// 	content: dataDic['msg'],
+							// 	showCancel: false
+							// });
 						}
 
 
@@ -279,7 +286,7 @@
 		display: flex;
 		flex-direction: column;
 		width: 100%;
-		height: auto;
+		height: 100vh;
 	}
 
 	.inputView {
@@ -350,5 +357,16 @@
 		color: #666666;
 		margin-top: 50rpx;
 		font-size: 28rpx;
+	}
+	
+	.errText {
+	
+		width: 100vw;
+		height: 44rpx;
+		margin-top: 46vh;
+		text-align: center;
+		font-size: 32rpx;
+		color: #666666;
+	
 	}
 </style>

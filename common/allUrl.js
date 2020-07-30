@@ -1,6 +1,6 @@
 
-// http://192.168.43.125:8080  http://193.112.16.196:8080
-const baseURL = 'http://193.112.16.196:8080';
+// https://www.gzzjzl.com  http://193.112.16.196:8080
+const baseURL = 'https://www.gzzjzl.com';
 
 const KTradeid_addVisit = '/zjzl/guard/saveForeignVisitors';
 const KTradeid_visitList = '/zjzl/guard/getForeignVisitorsList';

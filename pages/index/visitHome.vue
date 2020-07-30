@@ -53,9 +53,9 @@
 
 
 
-				uni.showModal({
-					content: '传输数据: ' + JSON.stringify(this.myObjData),
-				});
+				// uni.showModal({
+				// 	content: '传输数据: ' + JSON.stringify(this.myObjData),
+				// });
 
 				responseCallback(data);
 				// oc调用js

@@ -214,6 +214,7 @@
 	}
 
 	.uni-list-cell {
+		flex-direction: column;
 		padding-top: 16rpx;
 		padding-bottom: -16rpx;
 		width: 100%;
@@ -274,6 +275,8 @@
 		height: 44rpx;
 		margin-top: 46vh;
 		text-align: center;
+		font-size: 32rpx;
+		color: #666666;
 
 	}
 </style>
