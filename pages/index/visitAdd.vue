@@ -120,6 +120,51 @@
 
 		},
 		methods: {
+			
+			// 请求单位合同信息
+			requestCompanyContractInfo: function(formdata, callBack) {
+				uni.showLoading({
+					title: '加载中'
+				});
+				uni.request({
+					url: ALLURL.baseURL + '/zjzl/SK/json/Z027',
+					method: 'POST',
+					data: {
+						zjhm: this.myObjData.zjhm,
+						appKey: this.myObjData.appKey,
+						name: this.myObjData.xm,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: res => {
+						uni.hideLoading();
+			
+						var dataDic = res.data;
+						console.log("单位合同查询接口调用成功 " + JSON.stringify(dataDic));
+						if (Number(dataDic['code']) == 0) {
+							
+							this.seen = true;
+							this.fwzl = ALLURL.ZJValidString(dataDic['data']['fycode']);
+			
+						} else {
+							
+							this.errMsg = dataDic['msg'];
+							// uni.showModal({
+							// 	content: dataDic['msg'],
+							// 	showCancel: false
+							// });
+						}
+			
+			
+			
+					},
+					fail: () => {
+						uni.hideLoading();
+					},
+					complete: () => {}
+				});
+			},
 			// 请求合同信息
 			requestContractInfo: function(formdata, callBack) {
 				uni.showLoading({
@@ -147,7 +192,8 @@
 
 						} else {
 							
-							this.errMsg = dataDic['msg'];
+							this.requestCompanyContractInfo();
+							//this.errMsg = dataDic['msg'];
 							// uni.showModal({
 							// 	content: dataDic['msg'],
 							// 	showCancel: false

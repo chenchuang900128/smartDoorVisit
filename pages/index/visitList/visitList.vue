@@ -14,11 +14,11 @@
 					<view class="checkbtnText">{{'查看二维码'}}</view>
 
 				</view>
-				
-	           <text class="list-text"> 手机号:
+
+				<text class="list-text"> 手机号:
 					<text class="list-textValue">{{ item.phone + '\n'}}</text>
 				</text>
-				
+
 				<text class="list-text"> 来访人数:
 					<text class="list-textValue">{{ item.visitingNum + '\n'}}</text>
 				</text>
@@ -69,33 +69,78 @@
 				zjhm: e.zjhm,
 				appKey: e.appKey
 			};
-		
-			this.fwzl =  ALLURL.ZJValidString(e.fyid);
-			
-			if(this.fwzl.length < 1){
-				
+
+			this.fwzl = ALLURL.ZJValidString(e.fyid);
+
+			if (this.fwzl.length < 1) {
+
 				var that = this;
 				this.requestContractInfo({}, function(isRequestSuceess) {
-				
+
 					console.log('回调成功');
 					if (isRequestSuceess) {
-				
+
 						that.requestVisitList({}, function(requestSucess) {
-				
+
 						});
 					}
 				});
-				
-			}
-			else{
-				
+
+			} else {
+
 				this.requestVisitList({}, function(requestSucess) {
-								
+
 				});
 			}
-			
+
 		},
 		methods: {
+
+
+			// 请求单位合同信息
+			requestCompanyContractInfo: function(formdata, callBack) {
+				uni.showLoading({
+					title: '加载中'
+				});
+				uni.request({
+					url: ALLURL.baseURL + '/zjzl/SK/json/Z027',
+					method: 'POST',
+					data: {
+						zjhm: this.myObjData.zjhm,
+						appKey: this.myObjData.appKey,
+						name: this.myObjData.xm,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: res => {
+						uni.hideLoading();
+
+						var dataDic = res.data;
+						console.log("单位合同查询接口调用成功 " + JSON.stringify(dataDic));
+						if (Number(dataDic['code']) == 0) {
+
+							
+							this.fwzl = ALLURL.ZJValidString(dataDic['data']['fycode']);
+
+						} else {
+
+							this.errMsg = dataDic['msg'];
+							// uni.showModal({
+							// 	content: dataDic['msg'],
+							// 	showCancel: false
+							// });
+						}
+
+
+
+					},
+					fail: () => {
+						uni.hideLoading();
+					},
+					complete: () => {}
+				});
+			},
 			// 请求合同信息
 			requestContractInfo: function(formdata, callBack) {
 				uni.showLoading({
@@ -117,12 +162,20 @@
 						var dataDic = res.data;
 						console.log("合同查询接口调用成功 " + JSON.stringify(dataDic));
 						if (Number(dataDic['code']) == 0) {
-
+							
 							this.fwzl = ALLURL.ZJValidString(dataDic['data']['fyid']);
 							callBack(true);
 						} else {
 
-							this.errMsg = '暂无数据';
+							this.requestCompanyContractInfo({}, function(isRequestSuceess) {
+
+								
+								if (isRequestSuceess) {
+									callBack(true);
+
+								}
+							});
+							
 
 						}
 
@@ -238,7 +291,7 @@
 
 
 	.list-text {
-		
+
 		flex-direction: row;
 		margin-left: 6%;
 		line-height: 52rpx;
@@ -266,7 +319,7 @@
 		border-width: 2rpx;
 		border-color: #C0C0C0;
 		border-radius: 8rpx;
-		
+
 	}
 
 	.errText {
