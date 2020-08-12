@@ -43,7 +43,10 @@
 
 			</view>
 		</view>
-		<text class="errText">{{errMsg}}</text>
+		<view v-if="errViewSeen">
+			<image class="logo" src='../../../static/NetworkError@3x.png' mode="aspectFit"></image>
+			<view class="errText">{{errMsg}}</view>
+		</view>
 	</view>
 </template>
 
@@ -57,8 +60,10 @@
 				myObjData: {},
 				visitList: [],
 				seen: false,
-				errMsg: '',
+				errMsg: '暂无数据',
 				fwzl: '',
+				errViewSeen:false,
+
 			};
 		},
 
@@ -120,12 +125,12 @@
 						console.log("单位合同查询接口调用成功 " + JSON.stringify(dataDic));
 						if (Number(dataDic['code']) == 0) {
 
-							
+
 							this.fwzl = ALLURL.ZJValidString(dataDic['data']['fycode']);
 
 						} else {
 
-							this.errMsg = dataDic['msg'];
+							this.errViewSeen = true;
 							// uni.showModal({
 							// 	content: dataDic['msg'],
 							// 	showCancel: false
@@ -162,20 +167,20 @@
 						var dataDic = res.data;
 						console.log("合同查询接口调用成功 " + JSON.stringify(dataDic));
 						if (Number(dataDic['code']) == 0) {
-							
+
 							this.fwzl = ALLURL.ZJValidString(dataDic['data']['fyid']);
 							callBack(true);
 						} else {
 
 							this.requestCompanyContractInfo({}, function(isRequestSuceess) {
 
-								
+
 								if (isRequestSuceess) {
 									callBack(true);
 
 								}
 							});
-							
+
 
 						}
 
@@ -223,12 +228,12 @@
 								// }
 							} else {
 
-								this.errMsg = '暂无数据';
+							this.errViewSeen = true;
 
 							}
 						} else {
 
-							this.errMsg = '暂无数据';
+							this.errViewSeen = true;
 
 						}
 
@@ -322,14 +327,5 @@
 
 	}
 
-	.errText {
-
-		width: 100vw;
-		height: 44rpx;
-		margin-top: 46vh;
-		text-align: center;
-		font-size: 32rpx;
-		color: #666666;
-
-	}
+	
 </style>

@@ -1,5 +1,5 @@
 <template>
-	<view class="content" >
+	<view class="content">
 		<form @submit="formSubmit" @reset="formReset" v-if="seen">
 			<view class="inputView">
 				<text class="leftTitle">访客姓名</text>
@@ -52,8 +52,10 @@
 			</view>
 
 		</form>
-		<text class="errText">{{errMsg}}</text>
-		
+		<view v-if="errViewSeen">
+			<image class="logo" src='../../static/NetworkError@3x.png' mode="aspectFit"></image>
+			<view class="errText">{{errMsg}}</view>
+		</view>
 	</view>
 </template>
 
@@ -82,8 +84,8 @@
 				fwzl: '',
 				myFormatData: {},
 				myObjData: {},
-				errMsg: '',
-				
+				errMsg: '暂无数据',
+				errViewSeen: false,
 
 			};
 		},
@@ -106,21 +108,20 @@
 			// uni.showModal({
 			// 	content: '传输数据: ' + JSON.stringify(this.fwzl),
 			// });
-	
+
 			this.fwzl = ALLURL.ZJValidString(e.fyid);
 			if (this.fwzl.length < 1) {
 
 				this.requestContractInfo();
 
-			}
-			else{
+			} else {
 				this.seen = true;
 			}
 
 
 		},
 		methods: {
-			
+
 			// 请求单位合同信息
 			requestCompanyContractInfo: function(formdata, callBack) {
 				uni.showLoading({
@@ -139,25 +140,25 @@
 					},
 					success: res => {
 						uni.hideLoading();
-			
+
 						var dataDic = res.data;
 						console.log("单位合同查询接口调用成功 " + JSON.stringify(dataDic));
 						if (Number(dataDic['code']) == 0) {
-							
+
 							this.seen = true;
 							this.fwzl = ALLURL.ZJValidString(dataDic['data']['fycode']);
-			
+
 						} else {
-							
-							this.errMsg = dataDic['msg'];
+
+							this.errViewSeen = true;
 							// uni.showModal({
 							// 	content: dataDic['msg'],
 							// 	showCancel: false
 							// });
 						}
-			
-			
-			
+
+
+
 					},
 					fail: () => {
 						uni.hideLoading();
@@ -186,14 +187,13 @@
 						var dataDic = res.data;
 						console.log("合同查询接口调用成功 " + JSON.stringify(dataDic));
 						if (Number(dataDic['code']) == 0) {
-							
+
 							this.seen = true;
 							this.fwzl = ALLURL.ZJValidString(dataDic['data']['fyid']);
 
 						} else {
-							
+
 							this.requestCompanyContractInfo();
-							//this.errMsg = dataDic['msg'];
 							// uni.showModal({
 							// 	content: dataDic['msg'],
 							// 	showCancel: false
@@ -404,15 +404,6 @@
 		margin-top: 50rpx;
 		font-size: 28rpx;
 	}
-	
-	.errText {
-	
-		width: 100vw;
-		height: 44rpx;
-		margin-top: 46vh;
-		text-align: center;
-		font-size: 32rpx;
-		color: #666666;
-	
-	}
+
+
 </style>
