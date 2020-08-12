@@ -51,8 +51,6 @@
 
 				}
 
-
-
 				// uni.showModal({
 				// 	content: '传输数据: ' + JSON.stringify(this.myObjData),
 				// });
@@ -63,10 +61,10 @@
 			//	#endif
 
 			// this.myObjData = {
-			// 	xm: '陈创',
-			// 	zjhm: '430423199001281412',
-			// 	appKey: '25b5bafd7c305d8bc3aab074f4071873',
-			// 	fyid: '7671432352',
+			// 	xm: '徐惠贤',
+			// 	zjhm: '440111199402240929',
+			// 	appKey: '13549a1daefef9e50883f8460e741d2b',
+			// 	fyid: '7671431777',
 			// 	xqmc: '江云轩'
 			// };
 

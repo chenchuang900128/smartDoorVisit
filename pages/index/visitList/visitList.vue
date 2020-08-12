@@ -75,7 +75,7 @@
 				appKey: e.appKey
 			};
 
-			this.fwzl = ALLURL.ZJValidString(e.fyid);
+			//this.fwzl = ALLURL.ZJValidString(e.fyid);
 
 			if (this.fwzl.length < 1) {
 
@@ -125,8 +125,8 @@
 						console.log("单位合同查询接口调用成功 " + JSON.stringify(dataDic));
 						if (Number(dataDic['code']) == 0) {
 
-
 							this.fwzl = ALLURL.ZJValidString(dataDic['data']['fycode']);
+							callBack(true);
 
 						} else {
 
@@ -228,7 +228,7 @@
 								// }
 							} else {
 
-							this.errViewSeen = true;
+							   this.errViewSeen = true;
 
 							}
 						} else {

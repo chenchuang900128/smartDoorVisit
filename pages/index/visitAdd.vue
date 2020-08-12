@@ -144,9 +144,9 @@
 						var dataDic = res.data;
 						console.log("单位合同查询接口调用成功 " + JSON.stringify(dataDic));
 						if (Number(dataDic['code']) == 0) {
-
 							this.seen = true;
 							this.fwzl = ALLURL.ZJValidString(dataDic['data']['fycode']);
+							callBack(true);
 
 						} else {
 
@@ -190,6 +190,7 @@
 
 							this.seen = true;
 							this.fwzl = ALLURL.ZJValidString(dataDic['data']['fyid']);
+							callBack(true);
 
 						} else {
 
