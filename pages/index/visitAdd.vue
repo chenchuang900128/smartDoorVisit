@@ -264,7 +264,7 @@
 			},
 			formSubmit: function(e) {
 				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value));
-				var formdata = e.detail.value;
+				let formdata = e.detail.value;
 				this.myFormatData = formdata;
 
 				if ((ALLURL.ZJValidString(formdata['name'])).length < 1) {
