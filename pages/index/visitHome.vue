@@ -29,11 +29,11 @@
 
 				gridList: [{
 						name: '访客添加',
-						imgSrc: "../../static/访客.svg",
+						imgSrc: "../../static/visitAdd.svg",
 					},
 					{
 						name: '访客记录',
-						imgSrc: "../../static/访客记录.svg",
+						imgSrc: "../../static/visitList.svg",
 					},
 
 				]

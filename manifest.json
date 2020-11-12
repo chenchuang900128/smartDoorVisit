@@ -77,6 +77,6 @@
             "mode" : "hash",
             "base" : "/h5/smartDoorVisit/"
         },
-        "title" : "智能门禁访客"
+        "title" : "访客"
     }
 }
