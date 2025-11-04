@@ -84,3 +84,5 @@ npm run build:h5
 
 > 注：本项目为前端仓库，需与后端门禁/物联网服务对接方可实现验码通行与权限校验能力。
 
+## 技术交流
+![技术交流群](https://i.postimg.cc/RZ0sjnYP/front-End-Component.jpg)
