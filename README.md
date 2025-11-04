@@ -1,6 +1,11 @@
 # smartDoorVisit
  智能门锁访客
 
+## 项目预览
+![项目预览1](img1.jpg)
+
+![项目预览2](img2.jpg)
+
 ## 项目背景及简介
 smartDoorVisit 是一套面向社区、园区和企业办公场景的访客预约系统前端项目。基于 uni-app 构建，支持 H5 为主的多端发布形态，提供访客预约、二维码通行、访客记录与结果反馈等能力，结合后端门禁/物联网平台实现无接触、高效的通行体验。
 
@@ -84,5 +89,9 @@ npm run build:h5
 
 > 注：本项目为前端仓库，需与后端门禁/物联网服务对接方可实现验码通行与权限校验能力。
 
-## 技术交流
-![技术交流群](https://i.postimg.cc/RZ0sjnYP/front-End-Component.jpg)
+## 欢迎加入IT互联网技术交流群
+![IT技术交流群](https://www.qdzjkf.com/IMG/qdjs.jpg)
+
+
+## 欢迎加入软件接单交流群
+![软件接单交流群](https://www.qdzjkf.com/IMG/rjjd.jpg)
